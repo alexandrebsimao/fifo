@@ -16,7 +16,9 @@ $(document).ready(function(){
 	$(document).on('click','#remover-parada',function(){
 		var table 	= $(this).parents('table');
 
-		$(this).parents('tr').remove();
+		if(table.find('tbody tr:last-child td:first-child').html() > 1){
+			$(this).parents('tr').remove();
+		}
 
 		// Adiciona a chave da parada
 		table.find('tbody tr td:first-child').each(function(index){
@@ -40,7 +42,9 @@ $(document).ready(function(){
 	$(document).on('click','#remover-grupo',function(){
 		var table 	= $(this).parents('table');
 
-		$(this).parents('tr').remove();
+		if(table.find('tbody tr:last-child td:first-child').html() > 1){
+			$(this).parents('tr').remove();
+		}
 
 		// Adiciona a chave do grupo
 		table.find('tbody tr td:first-child').each(function(index){
@@ -69,7 +73,7 @@ $(document).ready(function(){
 			}
 
 			if(inicio >= termino){
-				$('#alertas').append('<div class="alert alert-danger"> <strong>Erro parada '+index+':</strong> O término da parada não pode ser menor que o inicio!');
+				$('#alertas').append('<div class="alert alert-danger"> <strong>Erro parada '+index+':</strong> O término da parada não pode ser menor ou igual que o inicio!');
 				retorno = false;
 			}
 
@@ -89,6 +93,22 @@ $(document).ready(function(){
 
 		});
 
+		$('#processos tbody tr').each(function(index){
+			index = index + 1;
+			var tempoServico 	= parseInt($(this).find('#tempoServico').val());
+			var qtdProcessos 	= parseInt($(this).find('#qtdProcessos').val());
+
+			if(tempoServico <= 0){
+				$('#alertas').append('<div class="alert alert-danger"> <strong>Erro processo '+index+':</strong> Não são permitidos tempo de serviço menor ou igual a 0!');
+				retorno = false;
+			}
+
+			if(qtdProcessos <= 0){
+				$('#alertas').append('<div class="alert alert-danger"> <strong>Erro processo '+index+':</strong> Não são permitidos quantidade de processos menor ou igual a 0!');
+				retorno = false;
+			}
+		});
+
 		return retorno;
 	});
 
@@ -96,7 +116,7 @@ $(document).ready(function(){
 	/*
 	 * Permitir que apenas numeros sejam digitados
 	 */
-	$('input').unbind('keyup').bind('keyup',function(e){
+	$(document).on('keyup', 'input', function(e){
  
 		var thisVal = $(this).val();
 		var tempVal = "";

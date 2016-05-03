@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+
 	<title>FIFO</title>
 
 	<link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css">
@@ -19,12 +21,6 @@
 	<div class="container">
 
 		<h1>FIFO</h1>
-
-		<?php if($processa->_salvamentoContexto): ?>
-			<h5>Com salvamento de contexto!</h5>
-		<?php else: ?>
-			<h5>Sem salvamento de contexto!</h5>
-		<?php endif; ?>
 
 		<table class="table table-bordered">
 			<thead>

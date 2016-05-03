@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
+	
 	<title>FIFO</title>
-
 	<link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css">
+
 </head>
 <body>
 
@@ -17,13 +19,9 @@
 			<div class="row">
 				<h4>CPU</h4>
 
-				<div class="col-md-10">
+				<div class="col-md-12">
 					<label>Inicio da CPU</label>
 					<input type="text" name="inicioCpu" id="inicioCpu" class="form-control" required="required" maxlength="4" />
-				</div>
-				<div class="col-md-2">
-					<label>Salvamento de Contexto?</label>
-					<input type="checkbox" name="salvamentoContexto" value="1" />
 				</div>
 
 			</div>
