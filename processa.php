@@ -9,6 +9,8 @@ class Processa
 	public $_intChegada;
 	public $_tempoServico;
 	public $_listaProcessos;
+	public $_primeiroProcesso;
+	public $_fileName;
 
 	public function __construct()
 	{
@@ -20,6 +22,7 @@ class Processa
 		$this->_qtdProcessos 	= $_POST['qtdProcessos'];
 		$this->_intChegada 		= $_POST['intChegada'];
 		$this->_tempoServico 	= $_POST['tempoServico'];
+		$this->_primeiroProcesso 	= $_POST['primeiroProcesso'];
 	}
 
 	/*
@@ -66,7 +69,7 @@ class Processa
 
 		for($p=0; $p < $processos['qtdProcessos']; $p++){
 
-			$somaIntervalo = $processos['intervaloChegada'];
+			$somaIntervalo += $ultimoAtendimento ? $processos['intervaloChegada'] : $this->_primeiroProcesso;
 
 			$instanciaAtendimento = $this->GetInstanciaAtendimento($somaIntervalo, $processos['numTempoServico'], $ultimoAtendimento);
 
@@ -94,19 +97,23 @@ class Processa
 	 */
 	private function GetInstanciaAtendimento($instanciaChegada, $tempoServico, $finalUltimoAtendimento){
 		$primeiro 				= !(bool) $finalUltimoAtendimento;
-		$tempoInicio 			= $this->_inicioCpu;
+		$tempoInicio 			= $this->_primeiroProcesso;
 		$tempoEspera 			= 0;
 		$atendimento 			= 0;
 
 		if($finalUltimoAtendimento < 0)
 			$finalUltimoAtendimento = $finalUltimoAtendimento*-1;
 
-		$tempoEspera = $primeiro ? ($tempoInicio < (int) $instanciaChegada) ? (int) $instanciaChegada : $tempoInicio : $finalUltimoAtendimento;
+		if($tempoInicio < $this->_inicioCpu)
+			$tempoInicio = $this->_inicioCpu;
 
-		$parada = $this->GetParadas1($finalUltimoAtendimento);
+		$tempoEspera = $primeiro ? $tempoInicio : $finalUltimoAtendimento;
 
-		if($parada != null){
-			$tempoEspera = $parada;
+		$paradas = $this->GetParadas1($finalUltimoAtendimento);
+
+		if($paradas != null){
+			// var_dump($tempoEspera);
+			$tempoEspera += $paradas['fim'] - $paradas['inicio'];
 		}
 
 		$atendimento += $tempoEspera;
@@ -157,7 +164,10 @@ class Processa
 	private function GetParadas1($finalUltimoAtendimento){
 		foreach ($this->_inicioParada as $chave => $inicio) {
 			if($finalUltimoAtendimento < $this->_terminoParada[$chave] && $finalUltimoAtendimento >= $inicio){
-				return $this->_terminoParada[$chave];
+				return array(
+					'inicio' 	=> $inicio,
+					'fim'		=> $this->_terminoParada[$chave]
+					);
 			}
 		}
 
@@ -195,8 +205,9 @@ class Processa
 	/*
 	 * Método para gerar arquivo
 	 */
-	function gerarArquivo(){
-		$file = fopen('arquivos/'.date('YmdHis').'.csv', 'a');
+	private function gerarArquivo(){
+		$this->_fileName = date('YmdHis');
+		$file = fopen('arquivos/'.$this->_fileName.'.csv', 'a');
 
 		$escrita = "Grupo; Processo; Inst. Chegada; Tempo de Serviço; Inst. Atendimento; Tempo Perm. Fila \r\n";
 

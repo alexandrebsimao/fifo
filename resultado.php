@@ -20,7 +20,12 @@
 
 	<div class="container">
 
+
 		<h1>FIFO</h1>
+
+		<a href="arquivos/<?php echo $processa->_fileName; ?>.csv" class="btn btn-default">Download .csv</a>
+
+		<br><br>
 
 		<table class="table table-bordered">
 			<thead>

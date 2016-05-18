@@ -19,9 +19,13 @@
 			<div class="row">
 				<h4>CPU</h4>
 
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<label>Inicio da CPU</label>
-					<input type="text" name="inicioCpu" id="inicioCpu" class="form-control" required="required" maxlength="4" />
+					<input type="text" name="inicioCpu" id="inicioCpu" class="form-control" required="required" maxlength="10" />
+				</div>
+				<div class="col-md-6">
+					<label>Inicio do Primeiro Processo</label>
+					<input type="text" name="primeiroProcesso" id="primeiroProcesso" class="form-control" required="required" maxlength="10" />
 				</div>
 
 			</div>
@@ -43,10 +47,10 @@
 					<tr>
 						<td>1</td>
 						<td>
-							<input type="text" name="inicioParada[]" id="inicioParada" class="form-control" maxlength="4" />
+							<input type="text" name="inicioParada[]" id="inicioParada" class="form-control" maxlength="10" />
 						</td>
 						<td>
-							<input type="text" name="terminoParada[]" id="terminoParada" class="form-control" maxlength="4" />
+							<input type="text" name="terminoParada[]" id="terminoParada" class="form-control" maxlength="10" />
 						</td>
 						<td width="150">
 							<button type="button" id="remover-parada" class="btn btn-danger">Remover Parada</button>
@@ -80,13 +84,13 @@
 					<tr>
 						<td>1</td>
 						<td>
-							<input type="text" name="qtdProcessos[]" id="qtdProcessos" class="form-control" required="required" maxlength="4" />
+							<input type="text" name="qtdProcessos[]" id="qtdProcessos" class="form-control" required="required" maxlength="10" />
 						</td>
 						<td>
-							<input type="text" name="intChegada[]" id="intChegada" class="form-control" required="required" maxlength="4" />
+							<input type="text" name="intChegada[]" id="intChegada" class="form-control" required="required" maxlength="10" />
 						</td>
 						<td>
-							<input type="text" name="tempoServico[]" id="tempoServico" class="form-control" required="required" maxlength="4" />
+							<input type="text" name="tempoServico[]" id="tempoServico" class="form-control" required="required" maxlength="10" />
 						</td>
 						<td width="150">
 							<button type="button" id="remover-grupo" class="btn btn-danger">Remover Grupo</button>
